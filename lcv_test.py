@@ -14,6 +14,8 @@ def get_loop_validator():
 
 def evaluate(loop_verification_func, test_file, data_root_dir, score_threshold,
              save_dir='./output', draw_match_results=False):
+    os.makedirs(save_dir, exist_ok=True)
+
     scene = os.path.basename(test_file).strip(".txt")
 
     print("-------- Processing {} ----------".format(scene))
@@ -52,7 +54,7 @@ def evaluate(loop_verification_func, test_file, data_root_dir, score_threshold,
 
     if draw_match_results:
         print("Drawing Match Results...")
-        match_results_dir = os.path.join(save_dir, "match_results")
+        match_results_dir = os.path.join(save_dir, "match_results", scene)
         os.makedirs(match_results_dir, exist_ok=True)
         for i, (query, reference) in tqdm(enumerate(img_pairs)):
             corr0, corr1 = corr_pairs[i]

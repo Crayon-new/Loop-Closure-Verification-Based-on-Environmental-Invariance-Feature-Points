@@ -1,21 +1,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import average_precision_score
+from sklearn.metrics import precision_recall_curve, average_precision_score, auc
 import os
+
+data_root_dir = './data'
+
+save_dir = './output'
 
 all_version_str_arr = ['SIFT', 'ORB', 'Aspanformer', 'Aspanformer_RemoveEgo',
                        'Aspanformer_RemoveEgo_BgMask']
 
-val_files = [
+val_file_names = [
     "robotcar_qAutumn_dbNight_easy_final.txt",
     "robotcar_qAutumn_dbNight_diff_final.txt",
     "robotcar_qAutumn_dbSunCloud_easy_final.txt",
     "robotcar_qAutumn_dbSunCloud_diff_final.txt",
 ]
-scenes = [file[:-4] for file in val_files]
-
-save_dir = './output'
+val_files = [os.path.join(data_root_dir, file) for file in val_file_names]
+scenes = [file[:-4] for file in val_file_names]
 
 
 def get_version_result(version_str):
@@ -79,7 +81,8 @@ for scene in scenes:
         if version_str not in all_results:
             continue
         precision, recall, thresholds, average_precision, max_recall = all_results[version_str][scene]
-        label_str = f'{version_name_str} AP={average_precision:.2f} MR@100P={max_recall:.2f}'
+        result_auc = auc(recall, precision)
+        label_str = f'{version_name_str} AUC={result_auc:.2f} MR@100P={max_recall:.2f}'
         ax.plot(recall, precision, label=label_str, color=color)
 
     ax.set_xlabel('Recall')
@@ -87,5 +90,7 @@ for scene in scenes:
     scene_str = scene[9:-6]
     ax.set_title(f'Precision-Recall Curve on {scene}')
     ax.legend()
-    fig.savefig(f'{plot_out_dir}/{scene}_pr_curve.png')
+    fig.savefig(f'{plot_out_dir}/pr_curve_{scene}.png')
     plt.close(fig)
+
+print('Done! Plot saved in ', os.path.abspath(plot_out_dir))

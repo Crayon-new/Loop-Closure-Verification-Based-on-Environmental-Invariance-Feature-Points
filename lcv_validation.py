@@ -12,6 +12,8 @@ from utils import draw_match, img_path_to_file_name
 
 def loop_verification(version_str, loop_verification_func, data_root_dir,
                       save_dir='./output', draw_match_results=False):
+    os.makedirs(save_dir, exist_ok=True)
+
     # evaluate
     val_files = [
         "robotcar_qAutumn_dbNight_easy_final.txt",
