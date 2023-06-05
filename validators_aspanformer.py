@@ -13,7 +13,7 @@ from src.utils.misc import lower_config
 
 from utils import draw_match
 
-config_path = 'ml-aspanformer-main/configs/aspan/outdoor/aspan_test.py'
+config_path = './ml-aspanformer-main/configs/aspan/outdoor/aspan_test.py'
 weights_path = './weights/outdoor.ckpt'
 
 config = get_cfg_defaults()
@@ -96,14 +96,16 @@ def loop_verification_aspanformer_remove_ego_bgmask(img0_path, img1_path):
     background_mask0 = load_mask_from_img_path(img0_path)
     background_mask1 = load_mask_from_img_path(img1_path)
 
-    corr0_mask = background_mask0[corr0[:, 0].astype(int), corr0[:, 1].astype(int)]
-    corr1_mask = background_mask1[corr1[:, 0].astype(int), corr1[:, 1].astype(int)]
+    corr0_ = corr0.copy().astype(int)
+    corr1_ = corr1.copy().astype(int)
+    corr0_mask = background_mask0[corr0_[:, 0], corr0_[:, 1]]
+    corr1_mask = background_mask1[corr1_[:, 0], corr1_[:, 1]]
 
     mask_use = corr0_mask * corr1_mask
     mask_use = mask_use.astype(bool)
 
-    corr0_filtered = corr0[mask_use]
-    corr1_filtered = corr1[mask_use]
+    corr0_filtered = corr0_[mask_use].astype(float)
+    corr1_filtered = corr1_[mask_use].astype(float)
 
     F_hat, mask_F = find_fundamental_mat(corr0_filtered, corr1_filtered)
 

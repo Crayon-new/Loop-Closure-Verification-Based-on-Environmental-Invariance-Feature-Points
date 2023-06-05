@@ -89,7 +89,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--test_file', type=str, required=True,
                         help='test dataset file, each line is a pair of images, format: query_file, reference_file')
-    parser.add_argument('--data_root_dir', type=str, default='./data',
+    parser.add_argument('--data_root_dir', type=str, required=True,
                         help='root directory of test dataset')
     parser.add_argument('--save_dir', type=str, default=None,
                         help='directory to save the results')

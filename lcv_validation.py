@@ -82,7 +82,7 @@ def loop_verification(version_str, loop_verification_func, data_root_dir,
         # max recall on 100% precision
         max_recall = max(recall[precision == 1])
         precision_file = os.path.join(result_dir, f'MaxRecall@100P_{scene}.txt')
-        np.savetxt(precision_file, [max_recall], fmt='%d')
+        np.savetxt(precision_file, [max_recall], fmt='%f')
 
         pr_curve_fig_file = os.path.join(result_dir, f'pr_curve_{scene}.png')
         label_str = f'{scene} AP={average_precision:.2f} MR@100P={max_recall:.2f}'
@@ -120,6 +120,7 @@ def main(args):
 
     for version, loop_verification_func in loop_validators_dict.items():
         version_str = version.replace('+', '_')
+        print("-------- Processing {} ----------".format(version_str))
         loop_verification(version_str, loop_verification_func, data_root_dir=data_root_dir,
                           save_dir=save_dir, draw_match_results=draw_match_results)
 
