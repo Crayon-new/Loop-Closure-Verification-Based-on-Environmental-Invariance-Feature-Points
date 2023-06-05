@@ -25,6 +25,12 @@ ln -s /path/to/repository/EE5346_2023_project /path/to/repository/Loop-Closure-V
 ```
 
 ### Prepare Background Mask
+Download the checkpoint file [from models](https://www.dropbox.com/s/fmlq806p2wqf311/trained_models.zip?dl=0) and unzip it to DANNet/checkpoint
+```bash
+cd Loop-Closure-Verification-Based-on-Environmental-Invariance-Feature-Points/DANNet
+# compute mask, input can be "../data/Autumn_mini_query", "../data/Night_mini_ref" or "../data/Suncloud_mini_ref", the output mask will be saved in dir like "Autumn_mini_query_mask"
+python evaluate.py --input ../data/Autumn_mini_query
+```
 
 ### Run Validation
 
