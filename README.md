@@ -78,4 +78,5 @@ data_for_test
 
 ## Acknowledgement
 
-https://github.com/apple/ml-aspanformer
+* [ml-aspanformer](https://github.com/apple/ml-aspanformer)
+* [DANNet](https://github.com/W-zx-Y/DANNet)
